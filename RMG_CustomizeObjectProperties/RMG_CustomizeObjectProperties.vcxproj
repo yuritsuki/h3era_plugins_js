@@ -15,7 +15,7 @@
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{01700c95-8606-446e-aab8-96975f7b1761}</ProjectGuid>
     <RootNamespace>RMGCustomizeObjectProperties</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -31,6 +31,7 @@
     <UseOfMfc>false</UseOfMfc>
     <CharacterSet>NotSet</CharacterSet>
     <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    <PlatformToolset>v141</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -55,8 +56,25 @@
   <ItemGroup>
     <ClInclude Include="AdditionalProperties.h" />
     <ClInclude Include="ObjectExtenderManager.h" />
+    <ClInclude Include="ObjectExtenders\AncientLampExtender.h" />
+    <ClInclude Include="ObjectExtenders\DreamTeacherExtender.h" />
+    <ClInclude Include="ObjectExtenders\ExtraHints.h" />
+    <ClInclude Include="ObjectExtenders\FlagsExtender.h" />
+    <ClInclude Include="ObjectExtenders\GraveExtender.h" />
+    <ClInclude Include="ObjectExtenders\H3MapItemNew.h" />
+    <ClInclude Include="ObjectExtenders\HermitsShackExtender.h" />
+    <ClInclude Include="ObjectExtenders\HillFortExtender.h" />
+    <ClInclude Include="ObjectExtenders\JunkmanExtender.h" />
+    <ClInclude Include="ObjectExtenders\MineralSpringExtender.h" />
+    <ClInclude Include="ObjectExtenders\ObservatoryExtender.h" />
+    <ClInclude Include="ObjectExtenders\ProspectorExtender.h" />
+    <ClInclude Include="ObjectExtenders\SkeletonTransformerExtender.h" />
     <ClInclude Include="ObjectExtenders\SpellMarketExtender.h" />
+    <ClInclude Include="ObjectExtenders\TempleOfLoyaltyExtender.h" />
+    <ClInclude Include="ObjectExtenders\TownGateExtender.h" />
+    <ClInclude Include="ObjectExtenders\TrailblazerExtender.h" />
     <ClInclude Include="ObjectExtenders\UniversityExtender.h" />
+    <ClInclude Include="ObjectExtenders\WarlocksLab.h" />
     <ClInclude Include="SoundManager.h" />
     <ClInclude Include="ObjectExtenders\ColosseumOfTheMagiExtender.h" />
     <ClInclude Include="ObjectExtenders\CreatureBanksExtender.h" />
@@ -76,8 +94,25 @@
     <ClCompile Include="AdditionalProperties.cpp" />
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ObjectExtenderManager.cpp" />
+    <ClCompile Include="ObjectExtenders\AncientLampExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\DreamTeacherExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\ExtraHints.cpp" />
+    <ClCompile Include="ObjectExtenders\FlagsExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\GraveExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\H3MapItemNew.cpp" />
+    <ClCompile Include="ObjectExtenders\HermitsShackExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\HillFortExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\JunkmanExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\MineralSpringExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\ObservatoryExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\ProspectorExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\SkeletonTransformerExtender.cpp" />
     <ClCompile Include="ObjectExtenders\SpellMarketExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\TempleOfLoyaltyExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\TownGateExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\TrailblazerExtender.cpp" />
     <ClCompile Include="ObjectExtenders\UniversityExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\WarlocksLab.cpp" />
     <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="ObjectExtenders\ColosseumOfTheMagiExtender.cpp" />
     <ClCompile Include="ObjectExtenders\CreatureBanksExtender.cpp" />

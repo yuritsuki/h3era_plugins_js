@@ -1,6 +1,6 @@
 #pragma once
 #include "../pch.h"
-#include "../ObjectsExtender.h"
+#include "../ObjectExtender.h"
 
 namespace chests
 {
@@ -8,7 +8,7 @@ namespace chests
 
 // float GetHeroLearningPower(const H3Hero *hero); // ��� �������� �������
 
-class ChestsExtender : public extender::ObjectsExtender
+class ChestsExtender : public extender::ObjectExtender
 {
     static ChestsExtender* instance;
     static constexpr DWORD WOG_OPTIONS_ARRAY = 0x02771920;

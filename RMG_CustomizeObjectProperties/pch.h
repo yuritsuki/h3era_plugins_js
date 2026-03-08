@@ -23,10 +23,16 @@
 // Добавьте сюда заголовочные файлы для предварительной компиляции
 // #include "framework.h"
 
-#include "..\headers\header.h"
+//#include "..\headers\header.h"
+#include "..\headers\header_JS.h"
 #include "h3functions.hpp"
 constexpr UINT16 H3_MAX_OBJECTS = h3::limits::OBJECTS;
 #include "ObjectExtenderManager.h"
+
+// JS objects headers
+#include "ObjectExtenders/H3MapItemNew.h"
+#include "ObjectExtenders/ExtraHints.h"
+#include "ObjectExtenders/FlagsExtender.h"
 
 // 1. Place all the obj props into mod/data/objects/*.txt and parse all the mods
 

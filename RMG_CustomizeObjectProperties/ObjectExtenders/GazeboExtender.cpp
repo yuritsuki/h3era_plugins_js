@@ -8,6 +8,8 @@ int H3MapItemGazebo::gazeboCounter = 0;
 
 GazeboExtender::GazeboExtender() : ObjectExtender(globalPatcher->CreateInstance("EraPlugin.GazeboExtender.daemon_n"))
 {
+    objectType = eHotaObject::ACTIVE;
+    objectSubtype = eHotaObjectActiveType::GAZEBO;
 
     CreatePatches();
 }
@@ -108,6 +110,7 @@ BOOL GazeboExtender::VisitMapItem(H3Hero *hero, H3MapItem *mapItem, const H3Posi
 
     if (auto gazebo = H3MapItemGazebo::GetFromMapItem(mapItem))
     {
+        ProcObjectFlagsVisitedByTeam(hero, objectType, objectSubtype);
 
         const bool isVisitedByHero = H3MapItemGazebo::IsVisitedByHero(gazebo, hero);
         const int playerGoldBeforeVisit = P_ActivePlayer->playerResources.gold;
@@ -175,13 +178,20 @@ BOOL GazeboExtender::SetHintInH3TextBuffer(H3MapItem *mapItem, const H3Hero *her
     if (const auto gazebo = H3MapItemGazebo::GetFromMapItem(mapItem))
     {
         H3String objName = RMGObjectInfo::GetObjectName(mapItem);
+        int teamId = THISCALL_2(int, 0x4A55D0, P_Game->Get(), interactPlayerId);
+        BOOL teamVisited = IsObjectVisitedByTeam(objectType, objectSubtype, teamId);
 
-        if (const H3Hero *hero = P_ActivePlayer->GetActiveHero())
+        // Add extra hint if object is visited at least once by the team
+        if (teamVisited)
+        {
+            AddExtraInfoHint(&objName, isRightClick);
+        }
+
+        // Add "Visited/Not visited" hint
+        if (hero)
         {
             const bool isVisitedByHero = H3MapItemGazebo::IsVisitedByHero(gazebo, hero);
-            sprintf(h3_TextBuffer, "%s%s", isRightClick ? "\n\n" : " ",
-                    P_GeneralText->GetText(isVisitedByHero ? 354 : 355));
-            objName.Append(h3_TextBuffer);
+            AddHeroVisitedHint(&objName, isRightClick, isVisitedByHero);
         }
 
         sprintf(h3_TextBuffer, "%s", objName.String());

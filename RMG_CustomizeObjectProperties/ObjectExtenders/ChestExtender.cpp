@@ -12,7 +12,7 @@ ChestsExtender& ChestsExtender::Get()
 
 // int H3MapItemGazebo::gazeboCounter = 0;
 
-ChestsExtender::ChestsExtender() : ObjectsExtender(globalPatcher->CreateInstance("EraPlugin.ChestExtender.daemon_n"))
+ChestsExtender::ChestsExtender() : ObjectExtender(globalPatcher->CreateInstance("EraPlugin.ChestExtender.daemon_n"))
 {
 
     //  CreatePatches();
@@ -113,7 +113,7 @@ H3RmgObjectGenerator *ChestsExtender::CreateRMGObjectGen(const RMGObjectInfo &ob
         if (objectInfo.subtype >= 7 && objectInfo.subtype <= 10 && (WoGObjectHasOptionEnabled(3) == 1))
             return nullptr;
 
-        return CreateDefaultH3RmgObjectGenerator(objectInfo);
+        return extender::ObjectExtenderManager::CreateDefaultH3RmgObjectGenerator(objectInfo);
     }
     return nullptr;
 }

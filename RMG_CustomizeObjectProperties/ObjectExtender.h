@@ -26,6 +26,12 @@ class ObjectExtender
     PatcherInstance *_pi = nullptr;
 
   public:
+    static constexpr LPCSTR extraObjectInfo_key = "RMG.objectGeneration.%d.%d.text.hint";
+    static constexpr LPCSTR visit_key = "RMG.objectGeneration.%d.%d.text.visit";
+    static constexpr LPCSTR visited_key = "RMG.objectGeneration.%d.%d.text.visited";
+    static constexpr LPCSTR cannotVisit_key = "RMG.objectGeneration.%d.%d.text.cannotVisit";
+
+  public:
     ObjectExtender(PatcherInstance *_pi) : _pi(_pi)
     {
     }
@@ -38,6 +44,7 @@ class ObjectExtender
   protected:
     virtual void CreatePatches() {};
     // virtual void GetObjectPreperties() noexcept = 0;
+
 
   public:
     // required override for some complex structures like creature banks
@@ -84,6 +91,24 @@ class ObjectExtender
                                              const H3String &defaultText) noexcept
     {
         return false;
+    }
+
+    void AddExtraInfoHint(H3String* objName, BOOL isRightClick) const noexcept
+    {
+        LPCSTR extraInfo = EraJS::read(H3String::Format(extraObjectInfo_key, objectType, objectSubtype).String());
+
+        sprintf(h3_TextBuffer, "%s%s",
+            isRightClick ? "\n" : " ",
+            extraInfo);
+        objName->Append(h3_TextBuffer);
+    }
+
+    void AddHeroVisitedHint(H3String* objName, BOOL isRightClick, BOOL isVisitedByHero) const noexcept
+    {
+        sprintf(h3_TextBuffer, "%s%s",
+            isRightClick ? "\n\n" : " ",
+            P_GeneralText->GetText(isVisitedByHero ? 354 : 355));
+        objName->Append(h3_TextBuffer);
     }
 
   public:

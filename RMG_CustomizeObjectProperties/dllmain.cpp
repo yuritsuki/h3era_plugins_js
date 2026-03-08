@@ -19,7 +19,7 @@ using namespace h3;
 
 namespace dllText
 {
-constexpr const char *PLUGIN_VERSION = "1.4.1";
+constexpr const char *PLUGIN_VERSION = "1.4.1_js";
 constexpr const char *PLUGIN_AUTHOR = "daemon_n";
 constexpr const char *INSTANCE_NAME = "EraPlugin." PROJECT_NAME ".daemon_n";
 // const char* PROJECT_NAME = "$(ProjectName)";
@@ -87,8 +87,21 @@ OBJECT_EXTENDER_DECLATOR(UniversityExtender, university)
 OBJECT_EXTENDER_DECLATOR(WarehousesExtender, warehouses)
 OBJECT_EXTENDER_DECLATOR(WateringPlaceExtender, wateringPlace)
 OBJECT_EXTENDER_DECLATOR(WoGObjectsExtender, wog)
-
-// namespace colosseumOfTheMagi
+// JS Objects
+OBJECT_EXTENDER_DECLATOR(AncientLampExtender, ancientLamp)
+OBJECT_EXTENDER_DECLATOR(DreamTeacherExtender, dreamTeacher)
+OBJECT_EXTENDER_DECLATOR(GraveExtender, grave)
+OBJECT_EXTENDER_DECLATOR(HermitsShackExtender, hermitsShack)
+OBJECT_EXTENDER_DECLATOR(HillFortExtender, hillFort)
+OBJECT_EXTENDER_DECLATOR(JunkmanExtender, junkman)
+OBJECT_EXTENDER_DECLATOR(MineralSpringExtender, mineralSpring)
+OBJECT_EXTENDER_DECLATOR(ObservatoryExtender, observatory)
+OBJECT_EXTENDER_DECLATOR(ProspectorExtender, prospector)
+OBJECT_EXTENDER_DECLATOR(SkeletonTransformerExtender, skeletonTransformer)
+OBJECT_EXTENDER_DECLATOR(TempleOfLoyaltyExtender, templeOfLoyalty)
+OBJECT_EXTENDER_DECLATOR(TownGateExtender, townGate)
+OBJECT_EXTENDER_DECLATOR(TrailblazerExtender, trailblazer)
+OBJECT_EXTENDER_DECLATOR(WarlocksLabExtender, warlocksLab)
 
 _LHF_(CrBanksTxt_BeforeLoad)
 {
@@ -98,17 +111,37 @@ _LHF_(CrBanksTxt_BeforeLoad)
     {
         extender::ObjectExtender *extendersList[] = {
             OBJECT_EXTENDER_GETTER(ColosseumOfTheMagiExtender, colosseumOfTheMagi),
-            OBJECT_EXTENDER_GETTER(CreatureBanksExtender, cbanks), OBJECT_EXTENDER_GETTER(GazeboExtender, gazebo),
-            OBJECT_EXTENDER_GETTER(ShrinesExtender, shrines), OBJECT_EXTENDER_GETTER(SpellMarketExtender, spellMarket),
+            OBJECT_EXTENDER_GETTER(CreatureBanksExtender, cbanks), 
+            OBJECT_EXTENDER_GETTER(GazeboExtender, gazebo),
+            OBJECT_EXTENDER_GETTER(ShrinesExtender, shrines), 
+            OBJECT_EXTENDER_GETTER(SpellMarketExtender, spellMarket),
             OBJECT_EXTENDER_GETTER(UniversityExtender, university),
             OBJECT_EXTENDER_GETTER(WarehousesExtender, warehouses),
-            // OBJECT_EXTENDER_GETTER(WateringPlaceExtender, wateringPlace),
-            OBJECT_EXTENDER_GETTER(WoGObjectsExtender, wog)};
+            //OBJECT_EXTENDER_GETTER(WateringPlaceExtender, wateringPlace),
+            OBJECT_EXTENDER_GETTER(WoGObjectsExtender, wog),
+
+            // JS Objects
+            OBJECT_EXTENDER_GETTER(AncientLampExtender, ancientLamp),
+            OBJECT_EXTENDER_GETTER(DreamTeacherExtender, dreamTeacher),
+            OBJECT_EXTENDER_GETTER(GraveExtender, grave),
+            OBJECT_EXTENDER_GETTER(HermitsShackExtender, hermitsShack),
+            OBJECT_EXTENDER_GETTER(HillFortExtender, hillFort),
+            OBJECT_EXTENDER_GETTER(JunkmanExtender, junkman),
+            OBJECT_EXTENDER_GETTER(MineralSpringExtender, mineralSpring),
+            OBJECT_EXTENDER_GETTER(ObservatoryExtender, observatory),
+            OBJECT_EXTENDER_GETTER(ProspectorExtender, prospector),
+            OBJECT_EXTENDER_GETTER(SkeletonTransformerExtender, skeletonTransformer),
+            OBJECT_EXTENDER_GETTER(TempleOfLoyaltyExtender, templeOfLoyalty),
+            OBJECT_EXTENDER_GETTER(TownGateExtender, townGate),
+            OBJECT_EXTENDER_GETTER(TrailblazerExtender, trailblazer),
+            OBJECT_EXTENDER_GETTER(WarlocksLabExtender, warlocksLab),
+            OBJECT_EXTENDER_GETTER(WateringPlaceExtender, wateringPlace)
+        };
 
         constexpr size_t extendersCount =
             std::size(extendersList); // sizeof(extendersList) / sizeof(extender::ObjectExtender*);
 
-        static_assert(extendersCount == 8, "Unexpected number of extenders");
+        static_assert(extendersCount == 23, "Unexpected number of extenders");
         //! Get the extenders and initialize
         for (size_t i = 0; i < extendersCount; i++)
         {
@@ -148,6 +181,12 @@ BOOL APIENTRY DllMain(HMODULE hModule, DWORD ul_reason_for_call, LPVOID lpReserv
             //! Create an instance of the plugin
             _PI = globalPatcher->CreateInstance(dllText::INSTANCE_NAME);
             _PI->WriteLoHook(0x4EDE42, CrBanksTxt_BeforeLoad);
+
+
+            // Module with flags extenders
+            FlagsExtender_Init();
+            // Extra hints
+            ExtraHints();
         }
         break;
     }

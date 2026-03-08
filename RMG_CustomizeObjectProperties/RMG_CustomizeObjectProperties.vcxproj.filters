@@ -52,6 +52,57 @@
     <ClCompile Include="AdditionalProperties.cpp">
       <Filter>source files</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectExtenders\AncientLampExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\DreamTeacherExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\ExtraHints.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\FlagsExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\GraveExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\H3MapItemNew.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\HermitsShackExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\HillFortExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\JunkmanExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\MineralSpringExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\ObservatoryExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\ProspectorExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\SkeletonTransformerExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\TempleOfLoyaltyExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\TownGateExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\TrailblazerExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
+    <ClCompile Include="ObjectExtenders\WarlocksLab.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectExtender.h">
@@ -101,6 +152,57 @@
     </ClInclude>
     <ClInclude Include="AdditionalProperties.h">
       <Filter>headers</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\AncientLampExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\DreamTeacherExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\ExtraHints.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\FlagsExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\GraveExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\H3MapItemNew.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\HermitsShackExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\HillFortExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\JunkmanExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\MineralSpringExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\ObservatoryExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\ProspectorExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\SkeletonTransformerExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\TempleOfLoyaltyExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\TownGateExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\TrailblazerExtender.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\WarlocksLab.h">
+      <Filter>Extenders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

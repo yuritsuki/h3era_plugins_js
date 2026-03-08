@@ -17,6 +17,8 @@ int H3MapItemColosseumOfTheMagi::colosseumOfTheMagiCounter = 0;
 ColosseumOfTheMagiExtender::ColosseumOfTheMagiExtender()
     : ObjectExtender(globalPatcher->CreateInstance("EraPlugin.ColosseumOfTheMagiExtender.daemon_n"))
 {
+    objectType = eHotaObject::ACTIVE;
+    objectSubtype = eHotaObjectActiveType::COLOSSEUM_OF_THE_MAGI;
 
     CreatePatches();
 }
@@ -95,6 +97,7 @@ BOOL ColosseumOfTheMagiExtender::VisitMapItem(H3Hero *hero, H3MapItem *mapItem, 
 
     if (auto colosseumOfTheMagi = H3MapItemColosseumOfTheMagi::GetFromMapItem(mapItem))
     {
+        ProcObjectFlagsVisitedByTeam(hero, objectType, objectSubtype);
 
         const bool isVisitedByHero = H3MapItemColosseumOfTheMagi::IsVisitedByHero(colosseumOfTheMagi, hero);
 
@@ -154,6 +157,7 @@ BOOL ColosseumOfTheMagiExtender::VisitMapItem(H3Hero *hero, H3MapItem *mapItem, 
     return false;
 }
 
+
 BOOL ColosseumOfTheMagiExtender::InitNewGameMapItemSetup(H3MapItem *mapItem) const noexcept
 {
 
@@ -173,21 +177,27 @@ _LHF_(Game__NewGameBeforeSetObjectsInitialParameters)
     return EXEC_DEFAULT;
 }
 
-BOOL ColosseumOfTheMagiExtender::SetHintInH3TextBuffer(H3MapItem *mapItem, const H3Hero *hero,
-                                                       const int interactPlayerId,
-                                                       const BOOL isRightClick) const noexcept
+BOOL ColosseumOfTheMagiExtender::SetHintInH3TextBuffer(H3MapItem* mapItem, const H3Hero* currentHero, const int interactPlayerId, const BOOL isRightClick) const noexcept
+
 {
 
-    if (const auto colosseumOfTheMagi = H3MapItemColosseumOfTheMagi::GetFromMapItem(mapItem))
+    if (auto colosseumOfTheMagi = H3MapItemColosseumOfTheMagi::GetFromMapItem(mapItem))
     {
         H3String objName = RMGObjectInfo::GetObjectName(mapItem);
+        int teamId = THISCALL_2(int, 0x4A55D0, P_Game->Get(), interactPlayerId);
+        BOOL teamVisited = IsObjectVisitedByTeam(objectType, objectSubtype, teamId);
 
-        if (const H3Hero *hero = P_ActivePlayer->GetActiveHero())
+        // Add extra hint if object is visited at least once by the team
+        if (teamVisited)
         {
-            const bool isVisitedByHero = H3MapItemColosseumOfTheMagi::IsVisitedByHero(colosseumOfTheMagi, hero);
-            sprintf(h3_TextBuffer, "%s%s", isRightClick ? "\n\n" : " ",
-                    P_GeneralText->GetText(isVisitedByHero ? 354 : 355));
-            objName.Append(h3_TextBuffer);
+            AddExtraInfoHint(&objName, isRightClick);
+        }
+
+        // Add "Visited/Not visited" hint
+        if (currentHero)
+        {
+            const bool isVisitedByHero = H3MapItemColosseumOfTheMagi::IsVisitedByHero(colosseumOfTheMagi, currentHero);
+            AddHeroVisitedHint(&objName, isRightClick, isVisitedByHero);
         }
 
         sprintf(h3_TextBuffer, "%s", objName.String());

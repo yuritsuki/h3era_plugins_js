@@ -14,7 +14,9 @@ struct H3MapItemWateringPlace
 
   public:
     static inline BOOL IsVisitedByHero(const H3Hero *hero) noexcept;
-    static inline H3MapItemWateringPlace *GetFromMapItem(const H3MapItem *mapItem) noexcept;
+    static H3MapItemWateringPlace *GetFromMapItem(const H3MapItem *mapItem) noexcept;
+    static void SetAsVisited(H3Hero* hero) noexcept;
+    static void SetAsNotVisited(H3Hero* hero) noexcept;
 };
 
 class WateringPlaceExtender : public extender::ObjectExtender
