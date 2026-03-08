@@ -6,7 +6,7 @@ namespace observatory
 ObservatoryExtender::ObservatoryExtender()
     : ObjectExtender(globalPatcher->CreateInstance("EraPlugin.ObservatoryExtender.daemon_n"))
 {
-    objectType = eHotaObject::TYPE_146;
+    objectType = eHotaObject::ACTIVE;
     objectSubtype = eHotaObjectType146::OBSERVATORY;
     CreatePatches();
 }
