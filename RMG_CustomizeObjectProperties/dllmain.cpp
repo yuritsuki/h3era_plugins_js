@@ -102,6 +102,7 @@ OBJECT_EXTENDER_DECLATOR(TempleOfLoyaltyExtender, templeOfLoyalty)
 OBJECT_EXTENDER_DECLATOR(TownGateExtender, townGate)
 OBJECT_EXTENDER_DECLATOR(TrailblazerExtender, trailblazer)
 OBJECT_EXTENDER_DECLATOR(WarlocksLabExtender, warlocksLab)
+OBJECT_EXTENDER_DECLATOR(BogHermitExtender, bogHermit)
 
 _LHF_(CrBanksTxt_BeforeLoad)
 {
@@ -135,13 +136,14 @@ _LHF_(CrBanksTxt_BeforeLoad)
             OBJECT_EXTENDER_GETTER(TownGateExtender, townGate),
             OBJECT_EXTENDER_GETTER(TrailblazerExtender, trailblazer),
             OBJECT_EXTENDER_GETTER(WarlocksLabExtender, warlocksLab),
-            OBJECT_EXTENDER_GETTER(WateringPlaceExtender, wateringPlace)
+            OBJECT_EXTENDER_GETTER(WateringPlaceExtender, wateringPlace),
+            OBJECT_EXTENDER_GETTER(BogHermitExtender, bogHermit)
         };
 
         constexpr size_t extendersCount =
             std::size(extendersList); // sizeof(extendersList) / sizeof(extender::ObjectExtender*);
 
-        static_assert(extendersCount == 23, "Unexpected number of extenders");
+        static_assert(extendersCount == 24, "Unexpected number of extenders");
         //! Get the extenders and initialize
         for (size_t i = 0; i < extendersCount; i++)
         {

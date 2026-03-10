@@ -57,6 +57,7 @@
     <ClInclude Include="AdditionalProperties.h" />
     <ClInclude Include="ObjectExtenderManager.h" />
     <ClInclude Include="ObjectExtenders\AncientLampExtender.h" />
+    <ClInclude Include="ObjectExtenders\bogHermitExtender.h" />
     <ClInclude Include="ObjectExtenders\DreamTeacherExtender.h" />
     <ClInclude Include="ObjectExtenders\ExtraHints.h" />
     <ClInclude Include="ObjectExtenders\FlagsExtender.h" />
@@ -95,6 +96,7 @@
     <ClCompile Include="dllmain.cpp" />
     <ClCompile Include="ObjectExtenderManager.cpp" />
     <ClCompile Include="ObjectExtenders\AncientLampExtender.cpp" />
+    <ClCompile Include="ObjectExtenders\bogHermitExtender.cpp" />
     <ClCompile Include="ObjectExtenders\DreamTeacherExtender.cpp" />
     <ClCompile Include="ObjectExtenders\ExtraHints.cpp" />
     <ClCompile Include="ObjectExtenders\FlagsExtender.cpp" />

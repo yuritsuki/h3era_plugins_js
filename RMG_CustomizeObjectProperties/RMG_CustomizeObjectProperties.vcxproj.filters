@@ -103,6 +103,9 @@
     <ClCompile Include="ObjectExtenders\WarlocksLab.cpp">
       <Filter>Extenders</Filter>
     </ClCompile>
+    <ClCompile Include="ObjectExtenders\bogHermitExtender.cpp">
+      <Filter>Extenders</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ObjectExtender.h">
@@ -202,6 +205,9 @@
       <Filter>Extenders</Filter>
     </ClInclude>
     <ClInclude Include="ObjectExtenders\WarlocksLab.h">
+      <Filter>Extenders</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectExtenders\bogHermitExtender.h">
       <Filter>Extenders</Filter>
     </ClInclude>
   </ItemGroup>
