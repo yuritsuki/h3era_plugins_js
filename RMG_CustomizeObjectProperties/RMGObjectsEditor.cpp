@@ -223,8 +223,8 @@ void __stdcall RMGObjectsEditor::RMG__CreateObjectGenerators(HiHook *h, H3RmgRan
                 {
                     // add these objects w/o any restrictions
                 case eObject::PANDORAS_BOX:
-                // case eObject::BORDERGUARD:
-                // case eObject::KEYMASTER:
+                 case eObject::BORDERGUARD:
+                 case eObject::KEYMASTER:
                 case eObject::PRISON:
                 case eObject::SEER_HUT:
 

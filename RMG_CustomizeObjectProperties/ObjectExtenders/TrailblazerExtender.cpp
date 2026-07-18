@@ -3,15 +3,18 @@
 
 
 namespace trailblazer {
-    BOOL H3MapItemTrailblazer::IsVisitedByHero(H3Hero* hero) noexcept
+    BOOL H3MapItemTrailblazer::IsVisitedByHero(H3Hero* hero, int terrainType) noexcept
     {
         sprintf(newMapItem::buffer, ErmVariableFormat, hero->id);
-        return Era::GetAssocVarIntValue(newMapItem::buffer);
+        int bitmask = Era::GetAssocVarIntValue(newMapItem::buffer);
+        return (bitmask & (1 << terrainType)) != 0;
     }
-    void H3MapItemTrailblazer::SetAsVisited(H3Hero* hero) noexcept
+    void H3MapItemTrailblazer::SetAsVisited(H3Hero* hero, int terrainType) noexcept
     {
         sprintf(newMapItem::buffer, ErmVariableFormat, hero->id);
-        Era::SetAssocVarIntValue(newMapItem::buffer, 1);
+        int bitmask = Era::GetAssocVarIntValue(newMapItem::buffer);
+        bitmask |= (1 << terrainType);
+        Era::SetAssocVarIntValue(newMapItem::buffer, bitmask);
     }
     void H3MapItemTrailblazer::SetAsNotVisited(H3Hero* hero) noexcept
     {
@@ -26,9 +29,9 @@ namespace trailblazer {
 
         if (H3Hero* hero = P_ActivePlayer->GetActiveHero())
         {
-            if (targetLandType == TRAILBLAZER_TERRAIN_TYPE && !road)
+            if (!road)
             {
-                const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero(hero);
+                const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero(hero, targetLandType);
                 if (isVisitedByHero)
                 {
                     int stepTrailCost = 75;
@@ -87,7 +90,7 @@ namespace trailblazer {
             // Add "Visited/Not visited" hint
             if (hero)
             {
-                const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero((H3Hero*)hero);
+                const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero((H3Hero*)hero, mapItem->land);
                 AddHeroVisitedHint(&objName, isRightClick, isVisitedByHero);
             }
 
@@ -104,11 +107,12 @@ namespace trailblazer {
     {
         if (GetFromMapItem(mapItem))
         {
-            const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero(hero);
+            const int terrainType = mapItem->land;
+            const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero(hero, terrainType);
 
             if (!isVisitedByHero)
             {
-                H3MapItemTrailblazer::SetAsVisited(hero);
+                H3MapItemTrailblazer::SetAsVisited(hero, terrainType);
                 if (isHuman)
                 {
                     FASTCALL_12(void, 0x4F6C00,
@@ -141,7 +145,7 @@ namespace trailblazer {
     {
         if (GetFromMapItem(mapItem))
         {
-            const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero(hero);
+            const bool isVisitedByHero = H3MapItemTrailblazer::IsVisitedByHero(hero, mapItem->land);
 
             if (!isVisitedByHero)
             {

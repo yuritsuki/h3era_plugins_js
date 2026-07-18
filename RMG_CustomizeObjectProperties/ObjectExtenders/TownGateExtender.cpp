@@ -107,7 +107,7 @@ namespace townGate
     TownGateExtender::TownGateExtender()
         : H3ActiveObject<H3MapItemTownGate>(
             "EraPlugin.TownGateExtender.daemon_n",
-            extender::HOTA_UNREACHABLE_OBJECT_TYPE,
+            extender::HOTA_OBJECT_TYPE,
             TOWN_GATE_OBJECT_SUBTYPE)
     {
         //CreatePatches();

@@ -5,14 +5,13 @@ namespace trailblazer
 {
     // type 144, subtype 11
     constexpr int TRAILBLAZER_OBJECT_SUBTYPE = 11;
-    constexpr INT32 TRAILBLAZER_TERRAIN_TYPE = eTerrain::ROUGH;
 
     struct H3MapItemTrailblazer
     {
         static constexpr LPCSTR ErmVariableFormat = "trailblazer_%d"; // heroid
 
-        static BOOL IsVisitedByHero(H3Hero* hero) noexcept;
-        static void SetAsVisited(H3Hero* hero) noexcept;
+        static BOOL IsVisitedByHero(H3Hero* hero, int terrainType) noexcept;
+        static void SetAsVisited(H3Hero* hero, int terrainType) noexcept;
         static void SetAsNotVisited(H3Hero* hero) noexcept;
     };
 
