@@ -35,7 +35,7 @@ namespace hillFort {
     _LHF_(HillFort_OnSetHintAsUpgraded)
     {
         int heroId = P_ActivePlayer->Get()->currentHero;
-        H3Hero* hero = &P_Game->Get()->heroes[heroId];
+        H3Hero* hero = P_Game->GetHero(heroId);
         auto mapItem = P_AdventureManager->Get()->GetMapItem(hero->x, hero->y, hero->z);
 
         if (mapItem->objectSubtype != HILL_FORT_OBJECT_SUBTYPE)
@@ -58,7 +58,7 @@ namespace hillFort {
     _LHF_(HillFort_JumpOverFreeUpgrade)
     {
         int heroId = P_ActivePlayer->Get()->currentHero;
-        H3Hero* hero = &P_Game->Get()->heroes[heroId];
+        H3Hero* hero = P_Game->GetHero(heroId);
         auto mapItem = P_AdventureManager->Get()->GetMapItem(hero->x, hero->y, hero->z);
 
         if (mapItem->objectSubtype != HILL_FORT_OBJECT_SUBTYPE)
@@ -74,7 +74,7 @@ namespace hillFort {
     _LHF_(HillFort_PatchUpgradeCost)
     {
         int heroId = P_ActivePlayer->Get()->currentHero;
-        H3Hero* hero = &P_Game->Get()->heroes[heroId];
+        H3Hero* hero = P_Game->GetHero(heroId);
         auto mapItem = P_AdventureManager->Get()->GetMapItem(hero->x, hero->y, hero->z);
 
         if (mapItem->objectSubtype != HILL_FORT_OBJECT_SUBTYPE)
@@ -91,7 +91,7 @@ namespace hillFort {
     _LHF_(HillFort_JumpOverAvailableUpgrade)
     {
         int heroId = P_ActivePlayer->Get()->currentHero;
-        H3Hero* hero = &P_Game->Get()->heroes[heroId];
+        H3Hero* hero = P_Game->GetHero(heroId);
         auto mapItem = P_AdventureManager->Get()->GetMapItem(hero->x, hero->y, hero->z);
 
         if (mapItem->objectSubtype != HILL_FORT_OBJECT_SUBTYPE)
@@ -112,7 +112,7 @@ namespace hillFort {
     _LHF_(HillFort_AIVisit)
     {
         int heroId = P_ActivePlayer->Get()->currentHero;
-        H3Hero* hero = &P_Game->Get()->heroes[heroId];
+        H3Hero* hero = P_Game->GetHero(heroId);
         auto mapItem = P_AdventureManager->Get()->GetMapItem(hero->x, hero->y, hero->z);
 
         if (mapItem->objectSubtype != HILL_FORT_OBJECT_SUBTYPE)

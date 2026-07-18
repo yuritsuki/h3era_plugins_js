@@ -25,13 +25,17 @@ namespace wateringPlace
     {
         for (const auto heroId : P_Game->players[P_CurrentPlayerID].heroIDs)
         {
-            auto hero = &P_Game->heroes[heroId];
-
-            if (H3MapItemWateringPlace::IsVisitedByHero(hero))
+            if (heroId >= 0)
             {
-                H3MapItemWateringPlace::SetAsNotVisited(hero);
-                hero->movement += WATERING_PLACE_MOVE_POINTS_GIVEN;
+                H3Hero* hero = P_Game->GetHero(heroId);
+
+                if (H3MapItemWateringPlace::IsVisitedByHero(hero))
+                {
+                    H3MapItemWateringPlace::SetAsNotVisited(hero);
+                    hero->movement += WATERING_PLACE_MOVE_POINTS_GIVEN;
+                }
             }
+
         }
     }
 

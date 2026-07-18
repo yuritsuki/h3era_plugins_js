@@ -101,7 +101,7 @@ int __stdcall HiHook_OnNewPlayerDay(HiHook* h, H3Hero* hero)
 //{
 //	for (size_t i = 0; i < h3::limits::HEROES; i++)
 //	{
-//		H3Hero* hero = &P_Game->heroes[i];
+//		H3Hero* hero = P_Game->GetHero(i);
 //	}
 //}
 
@@ -112,7 +112,7 @@ void __stdcall HiHook_OnNewWeek(HiHook* h, H3Game* this_)
 	// Heroes flags
 	for (size_t i = 0; i < P_HeroCount; i++)
 	{
-		H3Hero* hero = &P_Game->heroes[i];
+		H3Hero* hero = P_Game->GetHero(i);
 		trailblazer::H3MapItemTrailblazer::SetAsNotVisited(hero);
 		observatory::H3MapItemObservatory::SetAsNotVisited(hero);
 	}

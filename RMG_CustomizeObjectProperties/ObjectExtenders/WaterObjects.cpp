@@ -587,7 +587,7 @@ void __stdcall HiHook_Prison_Visit(
 _LHF_(LoHook_PrisonCreateHero)
 {
     // Герой.
-    H3Hero* hero = &P_Game->heroes[c->ebx];
+    H3Hero* hero = P_Game->GetHero(c->ebx);
 
     // Координаты постановки героя.
     _dword_ coords = DwordAt(c->ebp + 16);
@@ -614,8 +614,11 @@ _LHF_(LoHook_PrisonCreateHero_ResetFlags)
 // Отправляем сообщение нового формата при постройке лодки.
 _LHF_(LoHook_CreateBoat_NetMsg)
 {
-    // Отсылаем сообщение.
-    PlaceBoat_SendMsg(P_Game->Get(), c->edi, IntAt(0x69CCF4), ByteAt(c->ebp + 28));
+    if (!IsBoatCreation)
+    {
+        // Отсылаем сообщение.
+        PlaceBoat_SendMsg(P_Game->Get(), c->edi, IntAt(0x69CCF4), ByteAt(c->ebp + 28));
+    }
 
     c->return_address = 0x4BB054;
     return NO_EXEC_DEFAULT;
@@ -652,7 +655,7 @@ _LHF_(LoHook_PlaceHero_NetMsg_Prison)
 {
     H3Game* game = P_Game->Get();
     // Отсылаем сообщение.
-    PlaceHero_SendMsg(game, &game->heroes[c->ebx], DwordAt(c->ebp + 16), IntAt(0x69CCF4));
+    PlaceHero_SendMsg(game, game->GetHero(c->ebx), DwordAt(c->ebp + 16), IntAt(0x69CCF4));
 
     c->return_address = 0x4A3E7F;
     return NO_EXEC_DEFAULT;

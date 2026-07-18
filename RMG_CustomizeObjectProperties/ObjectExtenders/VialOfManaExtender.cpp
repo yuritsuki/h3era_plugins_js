@@ -117,10 +117,13 @@ namespace vialOfMana
                 aiMapItemWeight = hero->aiDoubleSpellPointsEffectiveness;
                 return true;
             }
-                
+            
+
+            UINT8 dest_z = static_cast<UINT8>(hero->dest_z);
+
             // H3MainSetup::GetMapItem
             H3MapItem* destinationCell = THISCALL_4(H3MapItem*, 0x4086D0,
-                &P_Game->mainSetup, hero->dest_x, hero->dest_y, hero->dest_z);
+                &P_Game->mainSetup, hero->dest_x, hero->dest_y, dest_z);
 
             int objType = static_cast<int>(destinationCell->objectType);
 
