@@ -146,7 +146,7 @@ namespace wateringPlace
                     }
                 }
                 // AI::H3Hero::CalculateMapPosWeight_
-                else if (hero->dest_x == -1 && THISCALL_2(int, 0x52C1F0, hero, pos) > 0)
+                else if (hero->destX == -1 && THISCALL_2(int, 0x52C1F0, hero, pos) > 0)
                 {
                     hero->movement = 0;
                     H3MapItemWateringPlace::SetAsVisited(hero);

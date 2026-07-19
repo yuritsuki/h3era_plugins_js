@@ -15668,239 +15668,242 @@ namespace h3
 	struct H3Hero
 	{
 		_H3API_SIZE_(0x492);
-
+	public:
 		/** @brief [0] */
-		INT16   x;
+		INT16		x;
 		/** @brief [2] */
-		INT16   y;
+		INT16		y;
 		/** @brief [4] */
-		INT16   z;
+		INT16		z;
 		/** @brief [6] used when the current hero is active and appears on H3MapItem*/
-		BOOL8	isVisible;
+		BOOL8		isVisible;
 		/** @brief [7] used to show / hide active hero*/
 		H3Position  mixedPosition;
 		/** @brief [B] true if there is an object below the hero*/
-		BOOL8	objectBelow;
+		BOOL8		objectBelow;
 		/** @brief [C] type of H3MapItem under hero*/
-		INT32   objectTypeUnder;
+		INT32		objectTypeUnder;
+		/** @brief [10] */
+		BOOL8		wasTriggerUnder;
 	protected:
-		/** @brief [10] ??? related to H3MapItem under hero*/
-		UINT32  _flag;
+		/** @brief [11] */
+		h3unk8		gap11[3];
 	public:
 		/** @brief [14] setup of H3MapItem under the hero*/
-		UINT32  objectBelowSetup;
+		UINT32		objectBelowSetup;
 		/** @brief [18] number of spell points*/
-		INT16   spellPoints;
-	public:
+		INT16		spellPoints;
 		/** @brief [1A] 0..156, has to match class, cannot be used to change specialty*/
-		eHero	id;
-	protected:
+		eHero		id;
 		/** @brief [1E] set at 4D8DB1, unknown*/
-		UINT	number;
-	public:
+		INT32		order;
 		/** @brief [22] 0..7 Red ~ Pink*/
-		INT8	owner;
+		INT8		owner;
 		/** @brief [23] hero's name, null-terminated*/
-		CHAR	name[12+1];
+		CHAR		name[12 + 1];
 		/**
 		 * @brief [30] index of the hero sprite to use 0..17 Knight ~ Elementalist
 		 * 0x12 boat sprite no class - can't navigate water (more sprites after but can crash)
 		 */
-		INT32   hero_class;
+		eHeroClass	heroClass;
 		/** @brief [34] id of the hero's portrait, 0 ~ 156*/
-		UINT8   picture;
+		UINT8		picture;
 		/** @brief [35] planned x destination*/
-		INT32	dest_x;
+		INT32		destX;
 		/** @brief [39] planned y destination*/
-		INT32	dest_y;
+		INT32		destY;
 		/** @brief [3D] planned z destination*/
-		INT32	dest_z;
-	protected:
-		h3unk8	_f_41[3];
-	public:
+		INT16		destZ;
+		/** @brief [3F] */
+		INT16		lastMagicSchoolLevel;
+		/** @brief [41] */
+		INT16		targetDistance;
+		/** @brief [43] */
+		BOOL8		targetIsCritical;
 		/** @brief [44] starting x position*/
-		UINT8   patrol_x;
+		UINT8		patrolX;
 		/** @brief [45] starting y position*/
-		UINT8   patrol_y;
+		UINT8		patrolY;
 		/** @brief [46] radius for patrolling, -1 means no range limit*/
-		INT8   patrolRadius;
-	protected:
-		h3unk8	_f_47;
-		h3unk8  _f_48;
-	public:
+		INT8		patrolRadius;
+		/** @brief [47] */
+		UINT8		facing;
+		/** @brief [48] */
+		UINT8		formation;
 		/** @brief [49] maximum movement points of the hero on a given turn*/
-		INT32   maxMovement;
+		INT32		maxMovement;
 		/** @brief [4D] remaining movement points of the hero on a given turn*/
-		INT32   movement;
+		INT32		movement;
 		/** @brief [51] current experience of the hero*/
-		INT32	experience;
+		INT32		experience;
 		/** @brief [55] current level of the hero*/
-		INT16   level;
-	protected:
+		INT16		level;
 		/** @brief [57] 32 visited object types per hero*/
 		H3Bitfield  learningStones;
 		/** @brief [5B] 32 visited object types per hero*/
-		H3Bitfield  marlettoTower;
+		H3Bitfield  marlettoTowers;
 		/** @brief [5F] 32 visited object types per hero*/
-		H3Bitfield  gardenRevelation;
+		H3Bitfield  gardenOfRevelations;
 		/** @brief [63] 32 visited object types per hero*/
-		H3Bitfield  mercenaryCamp;
+		H3Bitfield  mercenaryCamps;
 		/** @brief [67] 32 visited object types per hero*/
-		H3Bitfield  starAxis;
+		H3Bitfield  starAxises;
 		/** @brief [6B] 32 visited object types per hero*/
-		H3Bitfield  treeKnowldge;
+		H3Bitfield  treesOfKnowldge;
 		/** @brief [6F] 32 visited object types per hero*/
-		H3Bitfield  libraryEnlightenment;
+		H3Bitfield  libraries;
 		/** @brief [73] 32 visited object types per hero*/
-		H3Bitfield  arena;
+		H3Bitfield  arenas;
 		/** @brief [77] 32 visited object types per hero*/
-		H3Bitfield  schoolMagic;
+		H3Bitfield  schoolsOfMagic;
 		/** @brief [7B] 32 visited object types per hero*/
-		H3Bitfield  schoolWar;
-		UINT8	_f_7F[16];
-	public:
+		H3Bitfield  schoolsOfWar;
+		/** @brief [7F] 32 visited object types per hero*/
+		H3Bitfield  universities;
+		/** @brief [83] 32 visited object types per hero*/
+		H3Bitfield  shrines1Lvl;
+		/** @brief [87] 32 visited object types per hero*/
+		H3Bitfield  shrines2Lvl;
+		/** @brief [8B] 32 visited object types per hero*/
+		H3Bitfield  shrines3Lvl;
 		/** @brief [8F] seed for skill tree, 1..255*/
-		UINT8	levelSeed;
-	protected:
-		UINT8	_f_90;
-	public:
+		UINT8		levelSeed;
+		/** @brief [90] */
+		UINT8		lastWisdom;
 		/** @brief [91] creatures of the hero*/
-		H3Army army;
+		H3Army		army;
 		/** @brief [C9] level of each secondary skill*/
-		INT8   secSkill[28];
+		INT8		secSkill[28];
 		/** @brief [E5] order in which to display SSkills (1,2,3,...)*/
-		INT8   secSkillPosition[28];
+		INT8		secSkillPosition[28];
 		/** @brief [101] number of secondary skills the hero has*/
-		INT32  secSkillCount;
+		INT32		secSkillCount;
 		/** @brief [105] temporary hero flags*/
 		union
 		{
 			struct
 			{
 				/** @brief [0x00000001] Visited Well*/
-				unsigned well              : 1;
+				unsigned well : 1;
 				/** @brief [0x00000002] Visited Stables*/
-				unsigned stables           : 1;
+				unsigned stables : 1;
 				/** @brief [0x00000004] Visited Buoy*/
-				unsigned buoy              : 1;
+				unsigned buoy : 1;
 				/** @brief [0x00000008] Visited Swan Pond*/
-				unsigned swanPond          : 1;
+				unsigned swanPond : 1;
 				/** @brief [0x00000010] Visited idol of fortune on days 1~6, morale bonys*/
 				unsigned idolFortuneMorale : 1;
 				/** @brief [0x00000020] -1 luck from fountain of fortune*/
-				unsigned fountainFortune1  : 1;
+				unsigned fountainFortune1 : 1;
 				/** @brief [0x00000040] visited watering hole*/
-				unsigned wateringHole      : 1;
+				unsigned wateringHole : 1;
 				/** @brief [0x00000080] visited oasis*/
-				unsigned oasis             : 1;
+				unsigned oasis : 1;
 				/** @brief [0x00000100] visited temple on days 1~6*/
-				unsigned temple            : 1;
+				unsigned temple : 1;
 				/** @brief [0x00000200] shipwreck morale penalty*/
-				unsigned shipwreck         : 1;
+				unsigned shipwreck : 1;
 				/** @brief [0x00000400] crypt morale penalty*/
-				unsigned crypt             : 1;
+				unsigned crypt : 1;
 				/** @brief [0x00000800] derelict ship morale penalty*/
-				unsigned derelectShip      : 1;
+				unsigned derelectShip : 1;
 				/** @brief [0x00001000] pyramid morale penalty*/
-				unsigned pyramid           : 1;
+				unsigned pyramid : 1;
 				/** @brief [0x00002000] visited faerie ring*/
-				unsigned faerieRing        : 1;
+				unsigned faerieRing : 1;
 				/** @brief [0x00004000] visited fountain of youth*/
-				unsigned fountainOfYouth   : 1;
+				unsigned fountainOfYouth : 1;
 				/** @brief [0x00008000] visited mermaids*/
-				unsigned mermaids          : 1;
+				unsigned mermaids : 1;
 				/** @brief [0x00010000] visited rally flag*/
-				unsigned rallyFlag         : 1;
+				unsigned rallyFlag : 1;
 				/** @brief [0x00020000] hero is in tavern, see 0x4DA4D1*/
-				unsigned inTavern          : 1;
+				unsigned inTavern : 1;
 				/** @brief [0x00040000] hero is in a boat*/
-				unsigned inBoat            : 1;
+				unsigned inBoat : 1;
 				/** @brief [0x00080000] */
-				unsigned unk80000          : 1;
+				unsigned unk80000 : 1;
 				/** @brief [0x00100000] visited sirens*/
-				unsigned sirens            : 1;
+				unsigned sirens : 1;
 				/** @brief [0x00200000] warrior's tomb morale penalty*/
-				unsigned warriorTomb       : 1;
+				unsigned warriorTomb : 1;
 				/** @brief [0x00400000] typed luck cheat*/
-				unsigned luckCheat         : 1;
+				unsigned luckCheat : 1;
 				/** @brief [0x00800000] typed morale cheat*/
-				unsigned moraleCheat       : 1;
+				unsigned moraleCheat : 1;
 				/** @brief [0x01000000] typed speed cheat*/
-				unsigned speedCheat        : 1;
+				unsigned speedCheat : 1;
 				/** @brief [0x02000000] luck bonus from idol of fortune*/
-				unsigned idolFortuneLuck   : 1;
+				unsigned idolFortuneLuck : 1;
 				/** @brief [0x04000000] visited temple on day 7, +2 morale*/
-				unsigned temple2           : 1;
+				unsigned temple2 : 1;
 				/** @brief [0x08000000] +1 luck from fountain of fortune*/
-				unsigned fountainFortune2  : 1;
+				unsigned fountainFortune2 : 1;
 				/** @brief [0x10000000] +2 luck from fountain of fortune*/
-				unsigned fountainFortune3  : 1;
+				unsigned fountainFortune3 : 1;
 				/** @brief [0x20000000] +3 luck from fountain of fortune*/
-				unsigned fountainFortune4  : 1;
+				unsigned fountainFortune4 : 1;
 				/** @brief [0x40000000-0x80000000] */
-				unsigned unk40000000       : 2;
+				unsigned unk40000000 : 2;
 			};
 			UINT32 flags;
 		};
 		/** @brief [109] */
-		FLOAT  AI_experienceEffectiveness;
+		FLOAT		AI_experienceEffectiveness;
 		/** @brief [10D] number of times dimension door was cast this day*/
-		INT8	dimDoorCastCount; // +10D
+		INT8		dimDoorCastCount; // +10D
 		/** @brief [10E] spell expertise of disguise that was cast*/
-		INT32   disguisePower;  // +10E
+		INT32		disguisePower;  // +10E
 		/** @brief [112] spell expertise of fly that was cast*/
-		INT32	flyPower;
+		INT32		flyPower;
 		/** @brief [116] spell expertise of waterwalk that was cast*/
-		INT32	waterwalkPower; // +116
+		INT32		waterwalkPower; // +116
 		/** @brief [11A] */
-		INT8	moraleBonus;
+		INT8		moraleBonus;
 		/** @brief [11B] */
-		INT8	luckBonus;
+		INT8		luckBonus;
 		/** @brief [11C] */
-		BOOL8	isSleeping;
-	protected:
-		h3unk8  _f_11D[4];
-	public:
+		BOOL8		isSleeping;
+		/** @brief [11D] */
+		INT32		bounty;
 		/** @brief [121] (48 towns, room for 64)*/
 		H3VisitedTownsBitset visitedTowns;
 		/** @brief [129] spell expertise of Visions spell*/
-		INT32	visionPower; // +129
+		INT32		visionPower; // +129
 		/** @brief [12D] 19 artifacts on a hero*/
-		H3Artifact bodyArtifacts[19];
-	protected:
-		/** @brief [1C5] ?*/
-		UINT8	freeAddSlots;
-	public:
+		H3Artifact	bodyArtifacts[19];
+		/** @brief [1C5] */
+		UINT8		freeAddSlots;
 		/** @brief [1C6] whether an artifact slot is blocked or not*/
-		UINT8	blockedArtifacts[14];
+		UINT8		blockedArtifacts[14];
 		/** @brief [1D4] 64 artifacts in the backpack*/
-		H3Artifact backpackArtifacts[64];
+		H3Artifact	backpackArtifacts[64];
 		/** @brief [3D4] number of artifacts in the backpack*/
-		INT8	backpackCount;
+		INT8		backpackCount;
 		/** @brief [3D5] male or female*/
-		BOOL    isFemale;
+		BOOL		isFemale;
 		/** @brief [3D9] has custom biography?*/
-		BOOL8	customBio;
+		BOOL8		customBio;
 		/** @brief [3DA] custom biography*/
-		H3String biography;
+		H3String	biography;
 		/** @brief [3EA] Spells the hero has learned*/
-		BOOL8   learnedSpells[70];
+		BOOL8		learnedSpells[70];
 		/** @brief [430] Spells the hero has access to through artifacts*/
-		BOOL8   availableSpell[70];
+		BOOL8		availableSpell[70];
 		/** @brief [476] four primary skills, attack, defense, spell power, knowledge*/
-		INT8   primarySkill[4];
+		INT8		primarySkill[4];
 		/** @brief [47A] */
-		UINT   aiAggressiveness;
+		UINT		aiAggressiveness;
 		/** @brief [47E] */
-		UINT   aiSpellPowerEffectiveness;
+		UINT		aiSpellPowerEffectiveness;
 		/** @brief [482] */
-		UINT   aiSpellLengthEffectiveness;
+		UINT		aiSpellLengthEffectiveness;
 		/** @brief [486] */
-		UINT   aiKnowledgeEffectiveness;
+		UINT		aiKnowledgeEffectiveness;
 		/** @brief [48A] */
-		UINT   aiDoubleSpellPointsEffectiveness;
+		UINT		aiDoubleSpellPointsEffectiveness;
 		/** @brief [48E] */
-		UINT   aiExtraSpellPointsEffectiveness;
+		UINT		aiExtraSpellPointsEffectiveness;
 
 	public:
 		_H3API_ INT32 MaxLandMovement();
@@ -33289,17 +33292,6 @@ namespace h3
 		}
 		return FALSE;
 	}
-	_H3API_ VOID H3Hero::RecalculateMovement()
-	{
-		H3AdventureManager* adv = H3AdventureManager::Get();
-		adv->movementCalculated = 0;
-		adv->movementCalculated1 = 0;
-		if (dest_x != -1)
-		{
-			adv->MovementCalculations(H3Position::Pack(dest_x, dest_y, dest_z));
-			adv->MakeHeroPath();
-		}
-	}
 	_H3API_ BOOL8 H3Hero::CanFlyOnTile()
 	{
 		return THISCALL_1(BOOL8, 0x4E5F50, this);
@@ -33307,41 +33299,6 @@ namespace h3
 	_H3API_ INT32 H3Hero::GetMovementCost(INT32 orientation, UINT32 mixedPos)
 	{
 		return FASTCALL_4(INT32, 0x4B1620, this, orientation, mixedPos, movement);
-	}
-	_H3API_ INT32 H3Hero::SSkillsLeftToLearn()
-	{
-		INT32 known_skills = 0;
-		for (INT32 i = 0; i < 28; i++)
-			known_skills += secSkill[i];
-
-		INT32 maxSkills = 3 * ByteAt(0x4E256A); // usually 3 * 8
-
-		if (known_skills >= maxSkills)
-			return 0;
-
-		INT32 skills_can_be_learned = 0;
-
-		INT32 sslevel;
-		H3Main* main = H3Main::Get();
-
-		for (INT32 i = 0; i < 28; i++)
-		{
-			sslevel = secSkill[i];
-			if (!main->bannedSkills[i] || sslevel > 0)
-				skills_can_be_learned += 3 - sslevel;
-		}
-		if (hero_class != eHeroClass::NECROMANCER && hero_class != eHeroClass::DEATH_KNIGHT && secSkill[eSecondary::NECROMANCY] == 0 && !main->bannedSkills[eSecondary::NECROMANCY])
-			skills_can_be_learned -= 3;
-		if ((hero_class == eHeroClass::NECROMANCER || hero_class == eHeroClass::DEATH_KNIGHT) && secSkill[eSecondary::LEADERSHIP] == 0 && !main->bannedSkills[eSecondary::LEADERSHIP])
-			skills_can_be_learned -= 3;
-		if ((hero_class == eHeroClass::OVERLORD || hero_class == eHeroClass::WARLOCK) && secSkill[eSecondary::WATER_MAGIC] == 0 && !main->bannedSkills[eSecondary::WATER_MAGIC])
-			skills_can_be_learned -= 3;
-		if ((hero_class == eHeroClass::RANGER || hero_class == eHeroClass::DRUID) && secSkill[eSecondary::FIRE_MAGIC] == 0 && !main->bannedSkills[eSecondary::FIRE_MAGIC])
-			skills_can_be_learned -= 3;
-
-		skills_can_be_learned = std::min(maxSkills - known_skills, skills_can_be_learned);
-		skills_can_be_learned = std::max(skills_can_be_learned, 1);
-		return skills_can_be_learned - 1; // -1 because it's already included in formula for level to go to
 	}
 	_H3API_ BOOL H3Hero::WearsArtifact(INT id)
 	{

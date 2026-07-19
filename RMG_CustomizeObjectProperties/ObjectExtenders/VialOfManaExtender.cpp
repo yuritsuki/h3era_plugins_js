@@ -96,12 +96,10 @@ namespace vialOfMana
     {
         if (GetFromMapItem(mapItem))
         {
-            
-
             H3Position destination(
-                static_cast<INT16>(hero->dest_x),
-                static_cast<INT16>(hero->dest_y),
-                static_cast<INT8>(hero->dest_z)
+                static_cast<INT16>(hero->destX),
+                static_cast<INT16>(hero->destY),
+                static_cast<INT8>(hero->destZ)
             );
 
             // H3Position::IsValid
@@ -110,33 +108,25 @@ namespace vialOfMana
                 aiMapItemWeight = hero->aiDoubleSpellPointsEffectiveness;
                 return true;
             }
-                
-
+            
             if (*moveDistance <= 300)
             {
                 aiMapItemWeight = hero->aiDoubleSpellPointsEffectiveness;
                 return true;
             }
             
-
-            UINT8 dest_z = static_cast<UINT8>(hero->dest_z);
+            //UINT8 dest_z = static_cast<UINT8>(hero->destZ);
 
             // H3MainSetup::GetMapItem
             H3MapItem* destinationCell = THISCALL_4(H3MapItem*, 0x4086D0,
-                &P_Game->mainSetup, hero->dest_x, hero->dest_y, dest_z);
+                &P_Game->mainSetup, hero->destX, hero->destY, hero->destZ);
 
             int objType = static_cast<int>(destinationCell->objectType);
 
-            const bool alreadyMovingToManaRestore =
-                objType == eObject::MAGIC_SPRING ||
-                objType == eObject::MAGIC_WELL ||
-                (
-                    objType == extender::HOTA_PICKUPABLE_OBJECT_TYPE &&
-                    destinationCell->objectSubtype == VIAL_OF_MANA_OBJECT_SUBTYPE
-                    );
-
-            if (objType == eObject::MAGIC_SPRING || objType == eObject::MAGIC_WELL || 
-                objType == extender::HOTA_PICKUPABLE_OBJECT_TYPE && destinationCell->objectSubtype == VIAL_OF_MANA_OBJECT_SUBTYPE)
+            if (objType == eObject::MAGIC_SPRING || 
+                objType == eObject::MAGIC_WELL || 
+                (objType == extender::HOTA_PICKUPABLE_OBJECT_TYPE && 
+                    destinationCell->objectSubtype == VIAL_OF_MANA_OBJECT_SUBTYPE))
             {
                 aiMapItemWeight = hero->aiDoubleSpellPointsEffectiveness;
                 return true;
