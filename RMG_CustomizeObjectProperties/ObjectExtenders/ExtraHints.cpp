@@ -240,15 +240,26 @@ _LHF_(LoHook_AdvMgr_GetObjectCommand)
 
 
 
-_LHF_(LoHook_004A5D18)
-{
-    H3Hero* hero = reinterpret_cast<H3Hero*>(c->esi);
-    ProcObjectFlagsVisitedByTeam(hero, eObject::STABLES, 0);
+//_LHF_(LoHook_004A5D18)
+//{
+//    H3Hero* hero = reinterpret_cast<H3Hero*>(c->esi);
+//    ProcObjectFlagsVisitedByTeam(hero, eObject::STABLES, 0);
+//
+//    return EXEC_DEFAULT;
+//}
 
-    return EXEC_DEFAULT;
+void __stdcall HiHook_004A5D10(
+    HiHook* h, H3AdventureManager* advMgr, H3Hero* hero, 
+    H3MapItem* cell, char isHuman)
+{
+    THISCALL_4(void, h->GetDefaultFunc(), advMgr, hero, cell, isHuman);
+    ProcObjectFlagsVisitedByTeam(hero, eObject::STABLES, cell->objectSubtype);
+
 }
 
-void __stdcall HiHook_004A4270(HiHook* h, H3AdventureManager* advMgr, H3Hero* hero, H3MapItem* cell, int isHuman)
+void __stdcall HiHook_004A4270(
+    HiHook* h, H3AdventureManager* advMgr, H3Hero* hero, 
+    H3MapItem* cell, char isHuman)
 {
     THISCALL_4(void, h->GetDefaultFunc(), advMgr, hero, cell, isHuman);
     ProcObjectFlagsVisitedByTeam(hero, eObject::REFUGEE_CAMP, cell->objectSubtype);
@@ -266,7 +277,9 @@ void ExtraHints()
 
 
     // Stables - player flags
-    _PI->WriteLoHook(0x4A5D18, LoHook_004A5D18);
+    // Хотовский лоухук - плохое решение
+    //_PI->WriteLoHook(0x4A5D18, LoHook_004A5D18);
+    _PI->WriteHiHook(0x4A5D10, SPLICE_, EXTENDED_, THISCALL_, HiHook_004A5D10);
 
     // Refugee camp - player flags
     _PI->WriteHiHook(0x4A4270, SPLICE_, EXTENDED_, THISCALL_, HiHook_004A4270);

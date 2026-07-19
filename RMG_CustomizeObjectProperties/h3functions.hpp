@@ -10,11 +10,13 @@ inline void ClampMovementPoints(int& movePts)
         movePts = movePts;
 }
 
-constexpr INT8 MAX_HERO_PRIMARY_SKILL_VALUE = 150; // точно? (уточнить из PRIMA patches)
+constexpr UINT8 MAX_HERO_PRIMARY_SKILL_VALUE = 252; // точно? (уточнить из PRIMA patches)
 inline void ClampPrimarySkill(INT8* primarySkill)
 {
     if (*primarySkill > MAX_HERO_PRIMARY_SKILL_VALUE)
+    {
         *primarySkill = MAX_HERO_PRIMARY_SKILL_VALUE;
+    }
 }
 
 
