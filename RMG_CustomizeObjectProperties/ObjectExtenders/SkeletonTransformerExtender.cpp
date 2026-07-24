@@ -41,4 +41,9 @@ namespace skeletonTransformer {
 
         return false;
     }
+
+    //int SkeletonTransformerExtender::AI_OnScouting_Value() const noexcept
+    //{
+    //    return 1;
+    //}
 }

@@ -24,6 +24,8 @@
 
 
 
+
+
 // Общая идентификация объекта, получение структуры из H3MapItem 
 // и создание RMG-генератора
 template<typename TMapItem>
@@ -76,17 +78,31 @@ protected:
         return SetDefaultHint(mapItem);
     }
 
+    //TMapItem* GetFromMapItem(
+    //    H3MapItem* mapItem) const noexcept
+    //{
+    //    if (!mapItem ||
+    //        mapItem->objectType != this->objectType ||
+    //        mapItem->objectSubtype != this->objectSubtype)
+    //    {
+    //        return nullptr;
+    //    }
+
+    //    return reinterpret_cast<TMapItem*>(&mapItem->setup);
+    //}
+
     TMapItem* GetFromMapItem(
         H3MapItem* mapItem) const noexcept
     {
-        if (!mapItem ||
-            mapItem->objectType != this->objectType ||
-            mapItem->objectSubtype != this->objectSubtype)
-        {
-            return nullptr;
-        }
+        return reinterpret_cast<TMapItem*>(
+            GetSetupFromMapItem(mapItem));
+    }
 
-        return reinterpret_cast<TMapItem*>(&mapItem->setup);
+    const TMapItem* GetFromMapItem(
+        const H3MapItem* mapItem) const noexcept
+    {
+        return reinterpret_cast<const TMapItem*>(
+            GetSetupFromMapItem(mapItem));
     }
 
     H3RmgObjectGenerator* CreateRMGObjectGen(
@@ -203,6 +219,18 @@ protected:
     }
 
     ~H3ActiveObject() override = default;
+
+    virtual BOOL AI_MapGoal_Value(H3MapItem* mapItem, H3Hero* currentHero, const H3Player* activePlayer,
+        int& aiResWeight, int* moveDistance, const H3Position pos) const noexcept
+    {
+        return false;
+    }
+
+    virtual BOOL AI_Scouting_Value(H3MapItem* mapItem, H3Hero* currentHero, const H3Player* activePlayer,
+        int& aiResWeight, int* moveDistance, const H3Position pos) const noexcept
+    {
+        return false;
+    }
 };
 
 

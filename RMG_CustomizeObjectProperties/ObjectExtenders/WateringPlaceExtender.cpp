@@ -128,7 +128,10 @@ namespace wateringPlace
                 if (isHuman)
                 {
                     FASTCALL_12(void, 0x4F6C00, this->GetVisitingMessage().String(),
-                        2, -1, -1, -1, 0, -1, 0, -1, 0, -1, 0);
+                        2, -1, -1, 
+                        38, -hero->movement,
+                        37, WATERING_PLACE_MOVE_POINTS_GIVEN,
+                        -1, 0, -1, 0);
 
                     if (P_WindowManager->resultItemID != eControlId::CANCEL)
                     {
@@ -188,5 +191,10 @@ namespace wateringPlace
         }
 
         return false;
+    }
+
+    int WateringPlaceExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 1;
     }
 }

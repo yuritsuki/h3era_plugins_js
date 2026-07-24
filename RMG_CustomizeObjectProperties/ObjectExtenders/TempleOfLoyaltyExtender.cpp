@@ -2,7 +2,8 @@
 #include "TempleOfLoyaltyExtender.h"
 
 
-namespace templeOfLoyalty {
+namespace templeOfLoyalty
+{
     BOOL H3MapItemTempleOfLoyalty::IsVisitedByHero(H3Hero* hero) noexcept
     {
         sprintf(newMapItem::buffer, ErmVariableFormat, hero->id);
@@ -352,5 +353,10 @@ namespace templeOfLoyalty {
         }
 
         return false;
+    }
+
+    int TempleOfLoyaltyExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 1;
     }
 }

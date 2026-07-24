@@ -5,6 +5,7 @@ namespace trailblazer
 {
     // type 144, subtype 11
     constexpr int TRAILBLAZER_OBJECT_SUBTYPE = 11;
+    constexpr INT32 TRAILBLAZER_STEP_COST = 75;
 
     struct H3MapItemTrailblazer
     {
@@ -47,6 +48,8 @@ namespace trailblazer
             int* moveDistance,
             H3Position pos
         ) const noexcept override final;
+
+        int AI_OnScouting_Value() const noexcept override final;
 
     public:
         static TrailblazerExtender& Get();

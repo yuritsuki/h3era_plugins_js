@@ -1,6 +1,7 @@
 ﻿// dllmain.cpp : Определяет точку входа для приложения DLL.
 #include "../pch.h"
 
+LPCSTR EXTRA_HINT_KEY = "jsExtraHints.%d";
 
 LPCSTR teamsObjectVisited = "object_%d_%d_visitedByTeams"; // eObject, objSubtype
 
@@ -238,8 +239,6 @@ _LHF_(LoHook_AdvMgr_GetObjectCommand)
     return EXEC_DEFAULT;
 }
 
-
-
 //_LHF_(LoHook_004A5D18)
 //{
 //    H3Hero* hero = reinterpret_cast<H3Hero*>(c->esi);
@@ -249,7 +248,7 @@ _LHF_(LoHook_AdvMgr_GetObjectCommand)
 //}
 
 void __stdcall HiHook_004A5D10(
-    HiHook* h, H3AdventureManager* advMgr, H3Hero* hero, 
+    HiHook* h, H3AdventureManager* advMgr, H3Hero* hero,
     H3MapItem* cell, char isHuman)
 {
     THISCALL_4(void, h->GetDefaultFunc(), advMgr, hero, cell, isHuman);
@@ -258,7 +257,7 @@ void __stdcall HiHook_004A5D10(
 }
 
 void __stdcall HiHook_004A4270(
-    HiHook* h, H3AdventureManager* advMgr, H3Hero* hero, 
+    HiHook* h, H3AdventureManager* advMgr, H3Hero* hero,
     H3MapItem* cell, char isHuman)
 {
     THISCALL_4(void, h->GetDefaultFunc(), advMgr, hero, cell, isHuman);
@@ -268,14 +267,308 @@ void __stdcall HiHook_004A4270(
 
 
 
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////
+
+// ХД-мод
+bool isHdMod = false;
+
+// Очки передвижения героя перед посещением объекта
+int movementPts = 0;
+
+// Посещаемая клетка
+H3MapItem* object = nullptr;
+
+
+
+
+
+void AddStringToDlgItem(H3Dlg8Item* item, int picSubtype)
+{
+    if (picSubtype != 0)
+    {
+        sprintf(h3_TextBuffer, picSubtype > 0 ? "+%d" : "%d", picSubtype);
+        H3String res(h3_TextBuffer);
+        item->message.Append(res);
+    }
+}
+
+void SetDefNameToDlgItem(H3Dlg8Item* item, LPCSTR defName)
+{
+    UINT len = strlen(defName);
+    if (THISCALL_3(char, 0x404A40, &item->text, len, 1))
+    {
+        item->text = defName;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+_LHF_(LoHook_004F61DD)
+{
+    int picType = c->edi;
+
+    if (picType > 36)
+    {
+        H3Dlg8Item* item = reinterpret_cast<H3Dlg8Item*>(c->ebx);
+        int picSubtype = c->eax; // количество
+
+        // +/- очки движения
+        if (picType == 37 || picType == 38)
+        {
+            AddStringToDlgItem(item, picSubtype);
+            SetDefNameToDlgItem(item, "PMOVE.def");
+
+            item->defIndex = (picType == 37) ? 0 : 1;
+        }
+
+        // +/- радиус разведки
+        else if (picType == 39 || picType == 40)
+        {
+            AddStringToDlgItem(item, picSubtype);
+            SetDefNameToDlgItem(item, "PSCOUT.def");
+
+            item->defIndex = (picType == 39) ? 0 : 1;
+        }
+
+        // +1 морали и удачи в одной картинке
+        else if (picType == 41)
+        {
+            AddStringToDlgItem(item, picSubtype);
+            SetDefNameToDlgItem(item, "PMANDL.def");
+
+            item->defIndex = 0;
+        }
+
+        // pathfinding (снижение цены шага)
+        else if (picType == 42)
+        {
+            sprintf(h3_TextBuffer, EXTRA_HINT_KEY, picType);
+            H3String res(EraJS::read(h3_TextBuffer));
+            item->message.Append(res);
+            SetDefNameToDlgItem(item, "PTRAIL.def");
+
+            item->defIndex = 0;
+        }
+
+        // эффект маяка (+ очки передвижения по морю)
+        else if (picType == 43)
+        {
+            AddStringToDlgItem(item, picSubtype);
+            SetDefNameToDlgItem(item, "PNAVIG.def");
+
+            item->defIndex = 0;
+        }
+
+        c->return_address = 0x4F6229;
+        return NO_EXEC_DEFAULT;
+    }
+
+    return EXEC_DEFAULT;
+}
+
+_LHF_(LoHook_004F60E7)
+{
+    H3Dlg8Item* item = reinterpret_cast<H3Dlg8Item*>(c->ebx);
+    int picSubtype = c->eax; // количество
+    AddStringToDlgItem(item, picSubtype);
+
+    return EXEC_DEFAULT;
+}
+
+void __stdcall HiHook_004A8160(
+    HiHook* h, H3AdventureManager* this_, H3Hero* hero,
+    H3MapItem* cell, H3Position pos, bool isHuman)
+{
+    movementPts = hero->movement;
+    object = cell;
+    THISCALL_5(void, h->GetDefaultFunc(), this_, hero, cell, pos, isHuman);
+}
+
+void __stdcall HiHook_004A8904(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        type1, ByteAt(0x4A88C8 + 2),
+        38, -movementPts,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A2162(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    //H3MapitemFountainFortune setup = *reinterpret_cast<H3MapitemFountainFortune*>(&object->setup);
+    int luckBonus = static_cast<int>(object->setup << 15) >> 28;
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        type1, luckBonus,
+        type2, subtype2,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A22E3(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x4A2347 + 1);
+
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        type1, 1,
+        37, movementPtsBonus,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A9156(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x698B5C);
+
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        43, movementPtsBonus,
+        type2, subtype2,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A398D(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x4A39F4 + 1);
+
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        type1, 1,
+        37, movementPtsBonus,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A41B1(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x4A421A + 1);
+
+    // Хд-мод не умеет обрабатывать 3 картинки
+    if (!isHdMod)
+    {
+        FASTCALL_12(void, h->GetDefaultFunc(),
+            message, messageType, posX, posY,
+            type1, 1,
+            type2, 1,
+            par, time2Show, 37, movementPtsBonus);
+    }
+    else
+    {
+        FASTCALL_12(void, h->GetDefaultFunc(),
+            message, messageType, posX, posY,
+            41, 1,
+            37, movementPtsBonus,
+            par, time2Show, type3, subtype3);
+    }
+}
+
+void __stdcall HiHook_004A5DF0(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x698AE4);
+
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        37, movementPtsBonus,
+        type2, subtype2,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A5E54(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x698AE4);
+
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        37, movementPtsBonus,
+        ePictureCategories::CREATURE, eCreature::CHAMPION,
+        par, time2Show, type3, subtype3);
+}
+
+void __stdcall HiHook_004A7B91(
+    HiHook* h, LPCSTR message, int messageType, int posX, int posY,
+    ePictureCategories type1, int subtype1,
+    ePictureCategories type2, int subtype2,
+    int par, int time2Show,
+    ePictureCategories type3, int subtype3)
+{
+    int movementPtsBonus = IntAt(0x4A7BF5 + 1);
+
+    FASTCALL_12(void, h->GetDefaultFunc(),
+        message, messageType, posX, posY,
+        type1, 1,
+        37, movementPtsBonus,
+        par, time2Show, type3, subtype3);
+}
+
+_LHF_(LoHook_AfterHDModInit_ExtraHints)
+{
+    H3DLL wndPlugin = h3::H3DLL::H3DLL("hd_wog.dll");
+    if (wndPlugin.dataSize)
+    {
+        isHdMod = true;
+    }
+
+    return EXEC_DEFAULT;
+}
+
+
 void ExtraHints()
 {
     // RMC hints
     _PI->WriteLoHook(0x41391C, LoHook_AdvMgr_GetObjectRightClickText);
     // mouseover hints
     _PI->WriteLoHook(0x40B158, LoHook_AdvMgr_GetObjectCommand);
-
-
+    
     // Stables - player flags
     // Хотовский лоухук - плохое решение
     //_PI->WriteLoHook(0x4A5D18, LoHook_004A5D18);
@@ -283,4 +576,85 @@ void ExtraHints()
 
     // Refugee camp - player flags
     _PI->WriteHiHook(0x4A4270, SPLICE_, EXTENDED_, THISCALL_, HiHook_004A4270);
+
+
+
+    ///////////////////////////////////////////////////////////////
+
+    // Позже чтения текстовиков - проверяем, активен ли hd-mod
+    _PI->WriteLoHook(0x4EEAF2, LoHook_AfterHDModInit_ExtraHints);
+
+    // Расширяем кейс в конструкторе H3Dlg8Item
+    _PI->WriteLoHook(0x4F61DD, LoHook_004F61DD);
+
+    // Точечно редактируем кейсы в конструкторе H3Dlg8Item
+    // Позитивная удача
+    _PI->WriteLoHook(0x4F60E7, LoHook_004F60E7);
+    // Позитивная мораль
+    _PI->WriteLoHook(0x4F5FEE, LoHook_004F60E7);
+    // Негативная удача
+    _PI->WriteLoHook(0x4F618D, LoHook_004F60E7);
+    // Негативная мораль
+    _PI->WriteLoHook(0x4F6094, LoHook_004F60E7);
+
+    // Сохраняем некоторые атрибуты героя перед посещением объекта
+    _PI->WriteHiHook(0x4A8160, SPLICE_, EXTENDED_, THISCALL_, HiHook_004A8160);
+
+    
+
+    // Обновленные b_MsgBox'ы при посещении объектов
+    // Банки на - мораль, если разграблены
+    _PI->WriteByte(0x4AC210 + 1, -1);
+
+    // Буй - 11
+    _PI->WriteByte(0x4A8638 + 1, 1);
+
+    // Лебединое Озеро - 14 (- мув поинты не влезают в 1 байт)
+    _PI->WriteHiHook(0x4A8904, CALL_, EXTENDED_, FASTCALL_, HiHook_004A8904);
+
+    // Домик Фей - 28
+    _PI->WriteByte(0x4A8BBE + 1, 1);
+
+    // Фонтан Удачи - 30 (надо извлекать биты из setup)
+    _PI->WriteHiHook(0x4A2162, CALL_, EXTENDED_, FASTCALL_, HiHook_004A2162);
+
+    // Фонтан Молодости - 31 (+ мув поинты не влезают в 1 байт)
+    _PI->WriteHiHook(0x4A22E3, CALL_, EXTENDED_, FASTCALL_, HiHook_004A22E3);
+
+    // Идол Удачи - 38
+    _PI->WriteByte(0x4A0FB4 + 1, 1);
+    _PI->WriteByte(0x4A0FAA + 1, 1);
+    _PI->WriteByte(0x4A1018 + 1, 1);
+    _PI->WriteByte(0x4A1061 + 1, 1);
+
+    // Маяк - 43 (+ мув поинты не влезают в 1 байт)
+    _PI->WriteHiHook(0x4A9156, CALL_, EXTENDED_, FASTCALL_, HiHook_004A9156);
+
+    // Русалки - 52
+    _PI->WriteByte(0x4A9378 + 1, 1);
+
+    // Оазис - 56 (+ мув поинты не влезают в 1 байт)
+    _PI->WriteHiHook(0x4A398D, CALL_, EXTENDED_, FASTCALL_, HiHook_004A398D);
+
+    // Флаг Единства - 64 (+ мув поинты не влезают в 1 байт, и 3 картинки)
+    _PI->WriteHiHook(0x4A41B1, CALL_, EXTENDED_, FASTCALL_, HiHook_004A41B1);
+
+    // Конюшня - 94 (+ мув поинты не влезают в 1 байт)
+    // case 1 - посещение, без кавалеристов
+    _PI->WriteHiHook(0x4A5DF0, CALL_, EXTENDED_, FASTCALL_, HiHook_004A5DF0);
+    // case 3 - посещение, с кавалеристами
+    _PI->WriteHiHook(0x4A5E54, CALL_, EXTENDED_, FASTCALL_, HiHook_004A5E54);
+
+    // Храм - 96
+    // На оба кейса один колл
+    _PI->WriteByte(0x4A5F43 + 1, 1);
+    _PI->WriteByte(0x4A5F0A + 1, 1);
+
+    // Гробница Воина - 108 (у хд-мода захардкоженная внутри мода логика)
+    _PI->WriteByte(0x4A79F3 + 1, -3);
+    _PI->WriteByte(0x4A79EB + 1, -1);
+    _PI->WriteByte(0x4A79E0 + 1, -1);
+
+    // Водоем - 110 (+ мув поинты не влезают в 1 байт)
+    _PI->WriteHiHook(0x4A7B91, CALL_, EXTENDED_, FASTCALL_, HiHook_004A7B91);
 }

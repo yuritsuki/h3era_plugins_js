@@ -128,4 +128,9 @@ namespace prospector {
 
         return false;
     }
+
+    int ProspectorExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 10;
+    }
 }

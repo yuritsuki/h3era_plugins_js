@@ -185,4 +185,9 @@ namespace gazebo
 
         return false;
     }
+
+    int GazeboExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 50;
+    }
 }

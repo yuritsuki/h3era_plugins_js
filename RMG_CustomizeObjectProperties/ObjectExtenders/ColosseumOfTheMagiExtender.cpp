@@ -186,4 +186,9 @@ namespace colosseumOfTheMagi
 
         return false;
     }
+
+    int ColosseumOfTheMagiExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 100;
+    }
 }

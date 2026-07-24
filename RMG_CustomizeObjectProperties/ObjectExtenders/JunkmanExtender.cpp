@@ -191,4 +191,9 @@ namespace junkman {
 
         return false;
     }
+
+    //int JunkmanExtender::AI_OnScouting_Value() const noexcept
+    //{
+    //    return 1;
+    //}
 }

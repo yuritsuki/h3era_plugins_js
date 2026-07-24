@@ -43,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_DifferentStuff", "Test
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Test_BasePlugin", "Test_BasePlugin\Test_BasePlugin.vcxproj", "{A1B2C3D4-E5F6-47A8-9B0C-1234567890CD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Objects_MagicSpringMod", "Objects_MagicSpringMod\Objects_MagicSpringMod.vcxproj", "{C2B1D3E4-F6A7-48B9-0C1D-234567891234}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -129,6 +131,10 @@ Global
 		{A1B2C3D4-E5F6-47A8-9B0C-1234567890CD}.Debug|x86.Build.0 = Debug|Win32
 		{A1B2C3D4-E5F6-47A8-9B0C-1234567890CD}.Release|x86.ActiveCfg = Release|Win32
 		{A1B2C3D4-E5F6-47A8-9B0C-1234567890CD}.Release|x86.Build.0 = Release|Win32
+		{C2B1D3E4-F6A7-48B9-0C1D-234567891234}.Debug|x86.ActiveCfg = Debug|Win32
+		{C2B1D3E4-F6A7-48B9-0C1D-234567891234}.Debug|x86.Build.0 = Debug|Win32
+		{C2B1D3E4-F6A7-48B9-0C1D-234567891234}.Release|x86.ActiveCfg = Release|Win32
+		{C2B1D3E4-F6A7-48B9-0C1D-234567891234}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

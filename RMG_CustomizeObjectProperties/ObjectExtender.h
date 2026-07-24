@@ -64,6 +64,19 @@ class ObjectExtender
         return objGen;
     }
 
+    virtual void* GetSetupFromMapItem(
+        H3MapItem* mapItem) const noexcept
+    {
+        if (!mapItem ||
+            mapItem->objectType != objectType ||
+            mapItem->objectSubtype != objectSubtype)
+        {
+            return nullptr;
+        }
+
+        return &mapItem->setup;
+    }
+
     //virtual H3MapItem* GetFromMapItem(H3MapItem* mapItem) const noexcept
     //{
 
@@ -97,6 +110,16 @@ class ObjectExtender
                                              H3String &defaultText) noexcept
     {
         return false;
+    }
+
+    //virtual int AI_MapGoal_Value() const noexcept
+    //{
+    //    return 0;
+    //}
+
+    virtual int AI_OnScouting_Value() const noexcept
+    {
+        return 0;
     }
 
     void AddExtraInfoHint(H3String* objName, BOOL isRightClick) const noexcept

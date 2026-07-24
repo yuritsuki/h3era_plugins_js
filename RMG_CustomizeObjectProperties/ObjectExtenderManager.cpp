@@ -141,6 +141,9 @@ void ObjectExtenderManager::CreatePatches()
         skipMapMessageByHdMod = globalPatcher->VarValue<int>("HD.UI.AdvMgr.SkipMapMsgs");
 
         //	Era::RegisterHandler(OnWogObjectHint, "OnWogObjectHint");
+
+        //_PI->WriteLoHook(0x42f0c7, AIHero_GetMapGoalWeight);
+        _PI->WriteLoHook(0x4323db, AIHero_GetScoutingWeight);
     }
 }
 
@@ -247,6 +250,45 @@ _LHF_(ObjectExtenderManager::AIHero_GetObjectPosWeight)
                 c->return_address = 0x05285A1;
                 return NO_EXEC_DEFAULT;
             }
+        }
+    }
+
+    return EXEC_DEFAULT;
+}
+
+//_LHF_(ObjectExtenderManager::AIHero_GetMapGoalWeight)
+//{
+//    H3MapItem* cell = *reinterpret_cast<H3MapItem**>(c->ebp + 0x8);
+//
+//    for (auto& objectExtender : instance->objectExtenders)
+//    {
+//        if (objectExtender->GetSetupFromMapItem(cell))
+//        {
+//            if (objectExtender->AI_MapGoal_Value() != 0)
+//            {
+//                c->return_address = 0x42F0D0;
+//                return NO_EXEC_DEFAULT;
+//            }
+//            else
+//            {
+//                return EXEC_DEFAULT;
+//            }
+//        }
+//    }
+//
+//    return EXEC_DEFAULT;
+//}
+
+_LHF_(ObjectExtenderManager::AIHero_GetScoutingWeight)
+{
+    H3MapItem* cell = reinterpret_cast<H3MapItem*>(c->eax);
+
+    for (auto& objectExtender : instance->objectExtenders)
+    {
+        if (objectExtender->GetSetupFromMapItem(cell))
+        {
+            c->eax = objectExtender->AI_OnScouting_Value();
+            return NO_EXEC_DEFAULT;
         }
     }
 

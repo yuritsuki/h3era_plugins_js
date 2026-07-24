@@ -54,6 +54,10 @@ namespace hermitsShack
             int* moveDistance,
             H3Position pos) const noexcept override final;
 
+        int AI_OnScouting_Value() const noexcept override final;
+
+
+
         H3String GetNoBasicOrAdvancedSkillMessage() const
         {
             return GetStringMessage(noBasicOrAdvancedSkill_key);

@@ -569,4 +569,9 @@ namespace warlocksLab
 
         return false;
     }
+
+    //int WarlocksLabExtender::AI_OnScouting_Value() const noexcept
+    //{
+    //    return 1;
+    //}
 }

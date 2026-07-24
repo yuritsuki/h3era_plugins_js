@@ -126,4 +126,9 @@ namespace ancientLamp
 
         return false;
     }
+
+    int AncientLampExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 10;
+    }
 }

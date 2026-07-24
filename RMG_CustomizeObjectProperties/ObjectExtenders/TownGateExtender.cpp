@@ -262,4 +262,9 @@ namespace townGate
 
         return false;
     }
+
+    int TownGateExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 200;
+    }
 }

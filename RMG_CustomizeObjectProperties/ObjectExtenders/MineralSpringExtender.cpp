@@ -83,7 +83,7 @@ namespace mineralSpring {
                 {
                     FASTCALL_12(void, 0x4F6C00,
                         this->GetVisitingMessage().String(),
-                        1, -1, -1, 11, 1, -1, 0, -1, 0, -1, -777);
+                        1, -1, -1, 11, 1, 37, MOVE_POINTS_GIVEN, -1, 0, -1, -777);
                 }
                 ProcObjectFlagsVisitedByTeam(hero, objectType, objectSubtype);
                 H3MapItemMineralSpring::SetAsVisited(hero);
@@ -141,5 +141,10 @@ namespace mineralSpring {
         }
 
         return false;
+    }
+
+    int MineralSpringExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 1;
     }
 }

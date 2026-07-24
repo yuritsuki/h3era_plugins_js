@@ -215,4 +215,9 @@ namespace hermitsShack
 
         return false;
     }
+
+    int HermitsShackExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 50;
+    }
 }

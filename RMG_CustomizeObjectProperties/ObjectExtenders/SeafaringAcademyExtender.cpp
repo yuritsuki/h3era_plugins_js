@@ -626,4 +626,9 @@ namespace seafaringAcademy
 
         return false;
     }
+
+    //int SeafaringAcademyExtender::AI_OnScouting_Value() const noexcept
+    //{
+    //    return 50;
+    //}
 }

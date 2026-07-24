@@ -25,6 +25,8 @@ namespace skeletonTransformer {
             BOOL isHuman
         ) const noexcept override final;
 
+        //int AI_OnScouting_Value() const noexcept override final;
+
     public:
         static SkeletonTransformerExtender& Get();
     };

@@ -371,4 +371,9 @@ namespace altarOfMana
 
         return false;
     }
+
+    //int AltarOfManaExtender::AI_OnScouting_Value() const noexcept
+    //{
+    //    return 1;
+    //}
 }

@@ -62,7 +62,6 @@
     <ClInclude Include="ObjectExtenders\FlagsExtender.h" />
     <ClInclude Include="ObjectExtenders\GraveExtender.h" />
     <ClInclude Include="ObjectExtenders\H3MapItemNew.h" />
-    <ClInclude Include="ObjectExtenders\HdModPatches.h" />
     <ClInclude Include="ObjectExtenders\HermitsShackExtender.h" />
     <ClInclude Include="ObjectExtenders\HillFortExtender.h" />
     <ClInclude Include="ObjectExtenders\JetsamExtender.h" />
@@ -108,7 +107,6 @@
     <ClCompile Include="ObjectExtenders\FlagsExtender.cpp" />
     <ClCompile Include="ObjectExtenders\GraveExtender.cpp" />
     <ClCompile Include="ObjectExtenders\H3MapItemNew.cpp" />
-    <ClCompile Include="ObjectExtenders\HdModPatches.cpp" />
     <ClCompile Include="ObjectExtenders\HermitsShackExtender.cpp" />
     <ClCompile Include="ObjectExtenders\HillFortExtender.cpp" />
     <ClCompile Include="ObjectExtenders\JetsamExtender.cpp" />

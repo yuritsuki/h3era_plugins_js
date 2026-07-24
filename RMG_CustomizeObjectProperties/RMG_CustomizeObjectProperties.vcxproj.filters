@@ -34,7 +34,6 @@
     <ClCompile Include="ObjectExtenders\WoGObjectsExtender.cpp" />
     <ClCompile Include="RMGObjectsEditor.cpp" />
     <ClCompile Include="RMG_SettingsDlg.cpp" />
-    <ClCompile Include="ObjectExtenders\HdModPatches.cpp" />
     <ClCompile Include="ObjectExtenders\WaterObjects.cpp" />
     <ClCompile Include="ObjectExtenders\SeaBarrelExtender.cpp" />
     <ClCompile Include="ObjectExtenders\JetsamExtender.cpp" />
@@ -77,7 +76,6 @@
     <ClInclude Include="RMGObjectsEditor.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="RMG_SettingsDlg.h" />
-    <ClInclude Include="ObjectExtenders\HdModPatches.h" />
     <ClInclude Include="ObjectExtenders\WaterObjects.h" />
     <ClInclude Include="ObjectExtenders\SeaBarrelExtender.h" />
     <ClInclude Include="ObjectExtenders\JetsamExtender.h" />

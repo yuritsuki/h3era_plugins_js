@@ -110,7 +110,7 @@ namespace observatory {
                 {
                     FASTCALL_12(void, 0x4F6C00,
                         this->GetVisitingMessage().String(),
-                        1, -1, -1, -1, 0, -1, 0, -1, 0, -1, -777);
+                        1, -1, -1, 39, VISION_RADIUS_GIVEN, -1, 0, -1, 0, -1, -777);
                 }
 
                 if (hero->owner <= 7 && hero->x >= 0)
@@ -152,5 +152,10 @@ namespace observatory {
         }
 
         return false;
+    }
+
+    int ObservatoryExtender::AI_OnScouting_Value() const noexcept
+    {
+        return 50;
     }
 }

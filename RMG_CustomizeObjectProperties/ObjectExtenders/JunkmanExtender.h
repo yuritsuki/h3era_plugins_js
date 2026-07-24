@@ -27,6 +27,8 @@ namespace junkman {
             BOOL isHuman
         ) const noexcept override final;
 
+        //int AI_OnScouting_Value() const noexcept override final;
+
     public:
         static JunkmanExtender& Get();
     };

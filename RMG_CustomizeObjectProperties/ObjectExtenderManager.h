@@ -197,6 +197,8 @@ class ObjectExtenderManager : public IGamePatch
     static _LHF_(H3AdventureManager__GetDefaultObjectHoverHint);
     static _LHF_(H3AdventureManager__GetDefaultObjectClickHint);
     static _LHF_(AIHero_GetObjectPosWeight);
+    //static _LHF_(AIHero_GetMapGoalWeight);
+    static _LHF_(AIHero_GetScoutingWeight);
 
   public:
     void AddObjectsToObjectGenList(H3Vector<H3RmgObjectGenerator *> *rmgObjecsList);
