@@ -36,41 +36,43 @@ _LHF_(MagicSpringHook)
     
     int currentMana = hero->spellPoints;
 
-    if (showDialog)
+    // Проверяем, является ли текущий игрок человеком
+    // (Пользователь хочет, чтобы "full" было при мане >= 100%)
+    if (showDialog) 
     {
-        if (currentMana < maxMana)
+        if (currentMana >= maxMana)
         {
-            int newMana = currentMana + 100;
-            if (newMana > maxMana) newMana = maxMana;
+            LPCSTR msg = Era::tr("objects.magic_spring.full");
+            FASTCALL_12(void, 0x4F6C00, msg, 1, -1, -1, -1, 0, -1, 0, -1, 0, -1, -777);
+        }
+        else
+        {
+            // Восполняет ману полностью + случайно от 0% до 100% от максимальной маны
+            int bonusMana = h3::H3Random::Rand(0, maxMana);
+            int newMana = maxMana + bonusMana;
+
+            // Но проверить чтобы итоговая мана героя не была выше 9999
+            if (newMana > 9999) newMana = 9999;
 
             int gainedMana = newMana - currentMana;
+            if (gainedMana < 0) gainedMana = 0; // На всякий случай
+
             hero->spellPoints = (INT16)newMana;
 
-            if (showDialog)
-            {
-                // Используем FASTCALL_12 для вывода сообщения с иконкой маны (35)
-                h3::H3String msg;
-                msg.Printf(Era::tr("objects.magic_spring.success"), gainedMana);
-                FASTCALL_12(void, 0x4F6C00, msg.String(), 1, -1, -1, 35, gainedMana, -1, 0, -1, 0, -1, -777);
-            }
+            // Используем FASTCALL_12 для вывода сообщения с иконкой маны (35)
+            h3::H3String msg;
+            msg.Printf(Era::tr("objects.magic_spring.success"), gainedMana);
+            FASTCALL_12(void, 0x4F6C00, msg.String(), 1, -1, -1, 35, gainedMana, -1, 0, -1, 0, -1, -777);
 
             // Сбрасываем флаг (делаем источник недоступным до конца недели)
             cell->setup &= ~0x40;
         }
-        else
-        {
-            if (showDialog)
-            {
-                // Сообщение если мана и так полна
-                LPCSTR msg = Era::tr("objects.magic_spring.full");
-                FASTCALL_12(void, 0x4F6C00, msg, 1, -1, -1, -1, 0, -1, 0, -1, 0, -1, -777);
-            }
-        }
     }
-    else
-    {
+    else {
         // Логика для ИИ (оригинальная): удвоение маны
         int doubleMaxMana = 2 * maxMana;
+        if (doubleMaxMana > 9999) doubleMaxMana = 9999;
+
         if (currentMana < doubleMaxMana)
         {
             hero->spellPoints = (INT16)doubleMaxMana;
@@ -78,6 +80,7 @@ _LHF_(MagicSpringHook)
             cell->setup &= ~0x40;
         }
     }
+    
 
     // Возвращаемся в конец оригинального блока, где обновляется интерфейс
     c->return_address = 0x4A3385;
