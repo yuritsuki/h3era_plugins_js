@@ -35,7 +35,8 @@ struct CustomRewardSetupState
     LPCSTR customDefName = nullptr;
 
   public:
-    CustomRewardSetupState(const INT creatureBankType = 0, const UINT stateId = 0) noexcept;
+    CustomRewardSetupState() noexcept = default;
+    void Load(const INT objectSubtype, const UINT jsonStateId, const UINT gameStateId) noexcept;
 };
 
 struct CustomCreatureBank
@@ -83,6 +84,7 @@ struct CreatureBankManager
 {
 
     UINT m_size = 0;
+    bool m_isCustomized = false;
 
     // default data
     std::vector<int> monsterAwards;

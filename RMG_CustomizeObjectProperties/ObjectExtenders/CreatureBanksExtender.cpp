@@ -127,7 +127,7 @@ void __stdcall CreatureBanksExtender::OnAfterReloadLanguageData(Era::TEvent *eve
 
         bool trSuccess = false;
         H3String name = EraJS::read(
-            H3String::Format("RMG.objectGeneration.%d.%d.name", objectType, objectSubtype).String(), trSuccess);
+            H3String::Format("RMG.objectGeneration.16.%d.name", objectSubtype).String(), trSuccess);
 
         if (trSuccess)
         {
@@ -413,8 +413,7 @@ H3String *__cdecl CreatureBanksExtender::CrBank_AwardMessageFormatReadingFromTxt
     const auto mapItem = currentCreatureBank.mapItem;
 
     char *customVictoryText = EraJS::read(
-        H3String::Format("RMG.objectGeneration.%d.%d.text.victory", mapItem->objectType, mapItem->objectSubtype)
-            .String(),
+        H3String::Format("RMG.objectGeneration.16.%d.text.victory", mapItem->objectSubtype).String(),
         readSuccess);
 
     if (readSuccess)
@@ -639,8 +638,7 @@ H3String *__stdcall CrBank_DisplayPlunderedMessage(HiHook *h, H3String *text, H3
 
     auto mapItem = msgMapItem;
     char *customText = EraJS::read(
-        H3String::Format("RMG.objectGeneration.%d.%d.text.plundered", mapItem->objectType, mapItem->objectSubtype)
-            .String(),
+        H3String::Format("RMG.objectGeneration.16.%d.text.plundered", mapItem->objectSubtype).String(),
         readSuccess);
     if (readSuccess)
     {
@@ -757,7 +755,7 @@ void __stdcall CreatureBanksExtender::CrBank_AskForVisitMessage(HiHook *h, char 
     auto &bank = currentCreatureBank.bank;
 
     char *customVisitText = EraJS::read(
-        H3String::Format("RMG.objectGeneration.%d.%d.text.visit", mapItem->objectType, mapItem->objectSubtype).String(),
+        H3String::Format("RMG.objectGeneration.16.%d.text.visit", mapItem->objectSubtype).String(),
         readSuccess);
 
     if (readSuccess)
@@ -841,7 +839,7 @@ void CreatureBanksExtender::AfterLoadingObjectsTxtProc(const INT16 *maxSubtypes)
     // init vector sizes!
     addedBanksNumber = manager.LoadCreatureBanksFromJson(defaultBanksNumber, maxCreatureBankSubtype);
 
-    if (addedBanksNumber)
+    if (addedBanksNumber || manager.m_isCustomized)
     { // set new Creature Bank Setups data at native array address
         // IntAt(0x67029C) = (int)instance->creatureBanks.setups.data();
         const DWORD newCbArrayAddress = DWORD(manager.setups.data());
