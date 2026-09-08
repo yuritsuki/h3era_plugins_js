@@ -163,7 +163,7 @@ BOOL SpellMarketExtender::VisitMapItem(H3Hero *hero, H3MapItem *mapItem, const H
         {
             if (isHuman)
             {
-                // ShowMessage(hero, mapItem, skipMapMessageByHdMod, visitError);
+                 ShowMessage(hero, mapItem, true, visitError);
             }
         }
         else
@@ -239,7 +239,7 @@ BOOL SpellMarketExtender::VisitMapItem(H3Hero *hero, H3MapItem *mapItem, const H
                 }
                 else
                 {
-                    // ShowMessage(hero, mapItem, skipMapMessageByHdMod, eVisitError::LEARNED);
+                     ShowMessage(hero, mapItem, true, eVisitError::LEARNED);
                 }
             }
             if (selectedSpellSlot != -1)
